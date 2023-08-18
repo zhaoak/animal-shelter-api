@@ -17,9 +17,37 @@ namespace AnimalShelterAPI.Controllers
 
         // GET full list of animals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RescueAnimal>>> Get()
+        public async Task<ActionResult<IEnumerable<RescueAnimal>>> Get(string speciesFilter, string breedFilter, int minimumAgeFilter, int maximumAgeFilter, bool adoptableFilter)
         {
-            return await _db.RescueAnimals.ToListAsync();
+            IQueryable<RescueAnimal> query = _db.RescueAnimals.AsQueryable();
+
+            // not using a case statement; only multiple `if`s allow multiple params in one query
+            if (speciesFilter != null)
+            {
+                query = query.Where(row => row.Species == speciesFilter);
+            }
+
+            if (breedFilter != null)
+            {
+                query = query.Where(row => row.Breed == breedFilter);
+            }
+
+            if (minimumAgeFilter > 0)
+            {
+                query = query.Where(row => row.Age >= minimumAgeFilter);
+            }
+
+            if (maximumAgeFilter != 0)
+            {
+                query = query.Where(row => row.Age <= maximumAgeFilter);
+            }
+
+            if (adoptableFilter != null)
+            {
+                query = query.Where(row => row.Adoptable == adoptableFilter);
+            }
+
+            return await query.ToListAsync();
         }
 
         // GET specific animal
