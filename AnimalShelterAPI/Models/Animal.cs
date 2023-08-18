@@ -18,6 +18,8 @@ namespace AnimalShelterAPI.Models
     [Required]
     [Range(0, 400, ErrorMessage = "Age must be between 0 and 400. And really only above 25 for like, the oldest turtles or whatever.")]
     public int Age { get; set; }
+    [StringLength(100)]
+    public string Breed { get; set; }
     public string ImageURL { get; set; }
     [Required]
     public bool Adoptable { get; set; } = true;
