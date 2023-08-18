@@ -74,7 +74,7 @@ The currently available versions are:
 - `1.0`
 - `1.1`
 
-### *Available in both v1.0 and v1.1*:
+## v1.0 Documentation
 
 ### Get
 

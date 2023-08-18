@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalShelterAPI.Models;
 
-namespace AnimalShelterAPI.Controllers
+namespace AnimalShelterAPI.Controllers.v1
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -139,4 +139,59 @@ namespace AnimalShelterAPI.Controllers
             return _db.RescueAnimals.Any(e => e.RescueAnimalId == id);
         }
     }
+}
+
+namespace AnimalShelterAPI.Controllers.v1_1
+{
+
+        [ApiController]
+        [Route("api/v{version:apiVersion}/[controller]")]
+        [ApiVersion("1.1")]
+        public class AnimalsController : ControllerBase
+        {
+            private readonly AnimalShelterAPIContext _db;
+
+            public AnimalsController(AnimalShelterAPIContext db)
+            {
+                _db = db;
+            }
+
+            // GET specific animal
+            [MapToApiVersion("1.1")]
+            [HttpGet("{id}")]
+            public async Task<ActionResult<RescueAnimal>> GetAnimal(int id)
+            {
+                RescueAnimal thisAnimal = await _db.RescueAnimals.FindAsync(id);
+
+                if (thisAnimal == null)
+                {
+                    return NotFound();
+                }
+
+                return thisAnimal;
+            }
+
+            // alternate create route for v1.1
+            [MapToApiVersion("1.1")]
+            [HttpPost]
+            public async Task<ActionResult<RescueAnimal>> Post(RescueAnimal newAnimal)
+            {
+                if (AnimalExists(newAnimal.RescueAnimalId))
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    _db.RescueAnimals.Add(newAnimal);
+                    await _db.SaveChangesAsync();
+                    return CreatedAtAction(nameof(GetAnimal), new { id = newAnimal.RescueAnimalId }, newAnimal);
+                }
+            }
+
+            // helper function, checks if animal with specific id exists
+            private bool AnimalExists(int id)
+            {
+                return _db.RescueAnimals.Any(e => e.RescueAnimalId == id);
+            }
+        }
 }
