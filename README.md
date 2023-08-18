@@ -60,11 +60,11 @@ If desired, you may change the application's domain and port from `localhost:500
 something else in `AnimalShelterAPI/Properties/launchSettings.json`.
 You will need to replace `localhost:5000` in all requests with your domain and port number if you do so.
 
-### `Get`
+### Get
 
 #### `GET http://localhost:5000/api/Animals`
 
-Retrieves the full list of animals, ordered by Id.
+Retrieves the full list of animals, ordered by `id`.
 
 You may also optionally filter your request by appending one or more query strings in the form of `?{parameter1}={query1}&{parameter2}={query2}` to your request.
 These parameters are listed below.
@@ -85,7 +85,7 @@ If no animals match your query, nothing will be returned.
 Retrieves a specific animal by its id, or a status of `404 Not Found` if no animal with that id exists.
 *Example:* `GET http://localhost:5000/api/Animals/4` *would retrieve the animal with the id of 4.*
 
-### `POST`
+### POST
 
 #### `POST http://localhost:5000/api/Animals`
 
@@ -105,7 +105,7 @@ For example:
 }
 ```
 
-### `PUT`
+### PUT
 
 #### `PUT http://localhost:5000/api/Animals/{id}`
 
@@ -129,7 +129,7 @@ You must submit a body with your request like the following:
 ```
 **The value of `id` from the endpoint must match the value of `rescueanimalid` specified in the request body.**
 
-### `DELETE`
+### DELETE
 
 #### `DELETE http://localhost:5000/api/Animals/{id}`
 
