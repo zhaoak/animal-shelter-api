@@ -44,5 +44,47 @@ namespace AnimalShelterAPI.Controllers
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetAnimal), new { id = newAnimal.RescueAnimalId }, newAnimal);
         }
+
+        // use PUT request to update a specific animal
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, RescueAnimal updatedAnimal)
+        {
+            // make sure specified id and updated animal's id match
+            if (id != updatedAnimal.RescueAnimalId)
+            {
+                return BadRequest();
+            }
+            
+            // if they do, try to update selected animal
+            _db.RescueAnimals.Update(updatedAnimal);
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            // if updating fails
+            catch(DbUpdateConcurrencyException)
+            {
+                if (!AnimalExists(id))
+                {
+                    // return not found error if animal to update doesn't exist
+                    return NotFound();
+                }
+                else
+                {
+                    // if other error, throw exception
+                    throw;
+                }
+            }
+            
+            // return nothing if successful
+            return NoContent();
+        }
+
+        // helper function, checks if animal with specific id exists
+        private bool AnimalExists(int id)
+        {
+            return _db.RescueAnimals.Any(e => e.RescueAnimalId == id);
+        }
     }
 }
