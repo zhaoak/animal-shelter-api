@@ -62,17 +62,19 @@ You will need to replace `localhost:5000` in all requests with your domain and p
 
 ### **A note on versions:**
 
-The AnimalShelterAPI has multiple versions, and you can specify which one you want to use by specifying it
-in the endpoint you target, replacing `{VERSION_NUMBER}` with the version number you wish to use.
+The AnimalShelterAPI has multiple versions, and you must identify which one you want to use by specifying it
+in the endpoint you target, by replacing `{VERSION_NUMBER}` with the version number you wish to use.
 
 ```
 GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals
 ```
+*Replace `{VERSION_NUMBER}` with one of the options from the list below.*
 
 The currently available versions are:
 - `1.0`
 - `1.1`
 
+### *Available in both v1.0 and v1.1*:
 
 ### Get
 

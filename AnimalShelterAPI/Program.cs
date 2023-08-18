@@ -1,12 +1,13 @@
 using AnimalShelterAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddDbContext<AnimalShelterAPIContext>(
                   dbContextOptions => dbContextOptions.UseMySql(
