@@ -17,7 +17,7 @@ namespace AnimalShelterAPI.Controllers
 
         // GET full list of animals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RescueAnimal>>> Get(string speciesFilter, string breedFilter, int minimumAgeFilter, int maximumAgeFilter, bool adoptableFilter)
+        public async Task<ActionResult<IEnumerable<RescueAnimal>>> Get(string speciesFilter, string breedFilter, int minimumAgeFilter, int maximumAgeFilter, bool? adoptableFilter)
         {
             IQueryable<RescueAnimal> query = _db.RescueAnimals.AsQueryable();
 
