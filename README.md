@@ -60,9 +60,23 @@ If desired, you may change the application's domain and port from `localhost:500
 something else in `AnimalShelterAPI/Properties/launchSettings.json`.
 You will need to replace `localhost:5000` in all requests with your domain and port number if you do so.
 
+### **A note on versions:**
+
+The AnimalShelterAPI has multiple versions, and you can specify which one you want to use by specifying it
+in the endpoint you target, replacing `{VERSION_NUMBER}` with the version number you wish to use.
+
+```
+GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals
+```
+
+The currently available versions are:
+- `1.0`
+- `1.1`
+
+
 ### Get
 
-#### `GET http://localhost:5000/api/Animals`
+#### `GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals`
 
 Retrieves the full list of animals, ordered by `id`.
 
@@ -78,16 +92,16 @@ If no animals match your query, nothing will be returned.
 |maximumAgeFilter|int|no|Returns animals under this age only.|
 |adoptableFilter|boolean|no|Returns only animals available/unavailable for adoption.|
 
-*Example:* `GET http://localhost:5000/api/Animals?speciesFilter=Canine&adoptableFilter=true` *will retrieve all dogs available to be adopted.*
+*Example:* `GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals?speciesFilter=Canine&adoptableFilter=true` *will retrieve all dogs available to be adopted.*
 
-#### `GET http://localhost:5000/api/Animals/{id}`
+#### `GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals/{id}`
 
 Retrieves a specific animal by its id, or a status of `404 Not Found` if no animal with that id exists.
-*Example:* `GET http://localhost:5000/api/Animals/4` *would retrieve the animal with the id of 4.*
+*Example:* `GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals/4` *would retrieve the animal with the id of 4.*
 
 ### POST
 
-#### `POST http://localhost:5000/api/Animals`
+#### `POST http://localhost:5000/api/v{VERSION_NUMBER}/Animals`
 
 Adds a new animal to the database.
 You must include a body with all required properties (`name`(string), `species`(string), `description`(string), `age`(int), `adoptable`(bool))
@@ -107,7 +121,7 @@ For example:
 
 ### PUT
 
-#### `PUT http://localhost:5000/api/Animals/{id}`
+#### `PUT http://localhost:5000/api/v{VERSION_NUMBER}/Animals/{id}`
 
 With the animal's `id` specified in th endpoint, updates the specified animal with new information.
 Entirely replaces all old information with the submitted information, including NULLing any properties left blank.
@@ -131,7 +145,7 @@ You must submit a body with your request like the following:
 
 ### DELETE
 
-#### `DELETE http://localhost:5000/api/Animals/{id}`
+#### `DELETE http://localhost:5000/api/v{VERSION_NUMBER}/Animals/{id}`
 
 Delete the animal with the specified `id`. Does not require a request body.
 If no animal with the specified `id` exists, returns status `404`.

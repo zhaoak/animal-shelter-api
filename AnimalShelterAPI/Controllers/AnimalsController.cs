@@ -4,8 +4,9 @@ using AnimalShelterAPI.Models;
 
 namespace AnimalShelterAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class AnimalsController : ControllerBase
     {
         private readonly AnimalShelterAPIContext _db;
@@ -16,6 +17,7 @@ namespace AnimalShelterAPI.Controllers
         }
 
         // GET full list of animals
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RescueAnimal>>> Get(string speciesFilter, string breedFilter, int minimumAgeFilter, int maximumAgeFilter, bool? adoptableFilter)
         {
@@ -51,6 +53,7 @@ namespace AnimalShelterAPI.Controllers
         }
 
         // GET specific animal
+        [MapToApiVersion("1.0")]
         [HttpGet("{id}")]
         public async Task<ActionResult<RescueAnimal>> GetAnimal(int id)
         {
@@ -65,6 +68,7 @@ namespace AnimalShelterAPI.Controllers
         }
 
         // POST new animal to API
+        [MapToApiVersion("1.0")]
         [HttpPost]
         public async Task<ActionResult<RescueAnimal>> Post(RescueAnimal newAnimal)
         {
@@ -74,6 +78,7 @@ namespace AnimalShelterAPI.Controllers
         }
 
         // use PUT request to update a specific animal
+        [MapToApiVersion("1.0")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, RescueAnimal updatedAnimal)
         {
@@ -110,6 +115,7 @@ namespace AnimalShelterAPI.Controllers
         }
 
         // use DELETE request to delete a specific animal
+        [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnimal(int id)
         {
