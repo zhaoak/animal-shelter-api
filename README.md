@@ -51,7 +51,9 @@ Anyone can read from the API, but only authorized users may create, update, and 
 
 ### Step 3: Query API
 
--
+- open your browser and navigate to `localhost:5000/swagger`
+- from here, you may browse and query all endpoints
+- ensure all previous steps are completed first
 
 ## API Documentation
 
@@ -65,6 +67,8 @@ You will need to replace `localhost:5000` in all requests with your domain and p
 The AnimalShelterAPI has multiple versions, and you must identify which one you want to use by specifying it
 in the endpoint you target, by replacing `{VERSION_NUMBER}` with the version number you wish to use.
 
+**Version 1.1 is currently broken and contains no endpoints.**
+
 ```
 GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals
 ```
@@ -72,9 +76,9 @@ GET http://localhost:5000/api/v{VERSION_NUMBER}/Animals
 
 The currently available versions are:
 - `1.0`
-- `1.1`
+- ~`1.1`~
 
-### *Available in both v1.0 and v1.1*:
+### *Available in v1.0 ~and v1.1~*:
 
 ### Get
 
