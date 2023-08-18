@@ -81,6 +81,24 @@ namespace AnimalShelterAPI.Controllers
             return NoContent();
         }
 
+        // use DELETE request to delete a specific animal
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAnimal(int id)
+        {
+            // find animal to delete
+            RescueAnimal animalToDelete = await _db.RescueAnimals.FindAsync(id);
+            if (animalToDelete == null)
+            {
+                // if animal to delete doesn't exist, return error
+                return NotFound();
+            }
+            // otherwise, delete
+            _db.RescueAnimals.Remove(animalToDelete);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // helper function, checks if animal with specific id exists
         private bool AnimalExists(int id)
         {
