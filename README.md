@@ -53,6 +53,89 @@ Anyone can read from the API, but only authorized users may create, update, and 
 
 -
 
+## API Documentation
+
+These are the endpoints for the AnimalShelterAPI.
+If desired, you may change the application's domain and port from `localhost:5000` to
+something else in `AnimalShelterAPI/Properties/launchSettings.json`.
+You will need to replace `localhost:5000` in all requests with your domain and port number if you do so.
+
+### `Get`
+
+#### `GET http://localhost:5000/api/Animals`
+
+Retrieves the full list of animals, ordered by Id.
+
+You may also optionally filter your request by appending one or more query strings in the form of `?{parameter1}={query1}&{parameter2}={query2}` to your request.
+These parameters are listed below.
+If no animals match your query, nothing will be returned.
+
+| Parameter  | Type | Required? | Description|
+|------------|------|-----------|------------|
+|speciesFilter|string|no|Returns animals of a specific species only (canine, feline, etc.)|
+|breedFilter|string|no|Returns animals of a specific breed only (Beagle, Sphynx, etc.)|
+|minimumAgeFilter|int|no|Returns animals over this age only.|
+|maximumAgeFilter|int|no|Returns animals under this age only.|
+|adoptableFilter|boolean|no|Returns only animals available/unavailable for adoption.|
+
+*Example:* `GET http://localhost:5000/api/Animals?speciesFilter=Canine&adoptableFilter=true` *will retrieve all dogs available to be adopted.*
+
+#### `GET http://localhost:5000/api/Animals/{id}`
+
+Retrieves a specific animal by its id, or a status of `404 Not Found` if no animal with that id exists.
+*Example:* `GET http://localhost:5000/api/Animals/4` *would retrieve the animal with the id of 4.*
+
+### `POST`
+
+#### `POST http://localhost:5000/api/Animals`
+
+Adds a new animal to the database.
+You must include a body with all required properties (`name`(string), `species`(string), `description`(string), `age`(int), `adoptable`(bool))
+with your request, plus any optional properties (`notes`(string), `breed`(string), `imageurl`(string)).
+Do not include the animal's id.
+For example:
+
+```json
+{
+    "name": "Donkey",
+    "Species": "Donkey",
+    "description": "Donkey, like from Shrek.",
+    "age": 45,
+    "adoptable": "true"
+}
+```
+
+### `PUT`
+
+#### `PUT http://localhost:5000/api/Animals/{id}`
+
+With the animal's `id` specified in th endpoint, updates the specified animal with new information.
+Entirely replaces all old information with the submitted information, including NULLing any properties left blank.
+If no animal with the specified id is found, returns status `404 Not Found`.
+
+You must submit a body with your request like the following:
+```json
+{
+    "rescueanimalid": {id},
+    "name": "Donkey",
+    "species": "Donkey",
+    "notes": "What's his catchphrase again?",
+    "breed": "Rude.",
+    "imageurl": "image url here",
+    "description": "Donkey, like from Shrek.",
+    "age": 45,
+    "adoptable": "true"
+}
+```
+**The value of `id` from the endpoint must match the value of `rescueanimalid` specified in the request body.**
+
+### `DELETE`
+
+#### `DELETE http://localhost:5000/api/Animals/{id}`
+
+Delete the animal with the specified `id`. Does not require a request body.
+If no animal with the specified `id` exists, returns status `404`.
+
 ## Known Bugs
 
 None yet! 
